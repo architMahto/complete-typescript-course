@@ -1,10 +1,5 @@
 import { CourseModel } from './model/model';
-
-const bluebird = require('bluebird');
-
-async function findAllCourses(): Promise<any> {
-  return bluebird.promisifyAll(CourseModel.findAll());
-}
+import { findAllCourses } from './queries/findAllCourses';
 
 const main = async () => {
   try {
