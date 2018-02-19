@@ -1,13 +1,21 @@
-import { CourseModel } from './model/model';
-import { findAllCourses } from './queries/findAllCourses';
+import * as express from 'express';
 
-const main = async () => {
+import { CourseModel } from './model/model';
+import { findAllCoursesController } from './queries/findAllCourses';
+
+const app = express();
+
+async function findAllCourses (req: any, res: any) {
   try {
-    let allCourses = await findAllCourses();
-    console.log(allCourses);
-  } catch(err) {
-    console.log(err);
+    let allCourses = await findAllCoursesController();
+    res.status(200).json({'courses': allCourses});
+  } catch (err) {
+    res.status(500).json({'error': err});
   }
 }
 
-main();
+app.route('/api/courses').get(findAllCourses);
+
+app.listen(8090, () => {
+  console.log('Server is running ...');
+});
