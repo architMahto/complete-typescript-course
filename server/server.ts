@@ -1,4 +1,6 @@
 const ORM = require('sequelize');
+const bluebird = require('bluebird');
+
 import { Sequelize } from 'Sequelize';
 
 const dbURL = 'postgres://localhost:5432/complete-typescript-course';
@@ -17,6 +19,17 @@ const CourseModel = sequelize.define('Course', {
   isOngoing: ORM.BOOLEAN
 });
 
-CourseModel.findAll();
+async function findAllCourses(): Promise<any> {
+  return bluebird.promisifyAll(CourseModel.findAll());
+}
 
-console.log(CourseModel.findAll());
+const main = async () => {
+  try {
+    let allCourses = await findAllCourses();
+    console.log(allCourses);
+  } catch(err) {
+    console.log(err);
+  }
+}
+
+main();
