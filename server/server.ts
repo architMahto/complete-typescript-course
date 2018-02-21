@@ -1,20 +1,15 @@
 import * as express from 'express';
+import {Request, Response} from 'express';
 
-import { CourseModel } from './model/model';
-import { findAllCoursesController } from './queries/findAllCourses';
+import CoursesController from './controllers/coursesController';
 
 const app = express();
 
-async function findAllCourses (req: any, res: any) {
-  try {
-    let allCourses = await findAllCoursesController();
-    res.status(200).json({'courses': allCourses});
-  } catch (err) {
-    res.status(500).json({'error': err});
-  }
-}
+// Initialize controllers
+const coursesController = new CoursesController();
 
-app.route('/api/courses').get(findAllCourses);
+// Create API routes
+app.route('/api/courses').get(coursesController.findAllCourses);
 
 app.listen(8090, () => {
   console.log('Server is running ...');
