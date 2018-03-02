@@ -3,8 +3,8 @@ import CoursesService from '../services/coursesServices';
 
 const coursesService: CoursesService = new CoursesService();
 
-class CoursesController {
-  async findAllCourses(req: Request, res: Response) {
+export class CoursesController {
+  static async findAllCourses(req: Request, res: Response) {
     try {
       let courses = await coursesService.findAllCourses();
       res.status(200).json({ courses });
@@ -13,5 +13,3 @@ class CoursesController {
     }
   }
 }
-
-export default CoursesController;
